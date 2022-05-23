@@ -3,7 +3,7 @@ import { Fraction, Percent, Token, TokenAmount } from '../entities'
 import { NervePool } from './contracts'
 import { basisPointsToPercent } from './utils'
 
-export class NerveLiquidity {
+export class SupplyAave {
     public tokenAmountIn: TokenAmount
     public pool: NervePool
     public poolLpToken!: Token
@@ -54,5 +54,12 @@ export class NerveLiquidity {
         ])
 
         return this
+    }
+    public receiveSide() {
+        return this.pool.address
+    }
+
+    public approveToken() {
+        return this.poolLpToken.address
     }
 }
