@@ -14,7 +14,6 @@ import { WaitForComplete } from './waitForComplete'
 import { AvaxRouter, UniLikeRouter } from './contracts'
 import { OneInchTrade } from './oneInchTrade'
 import { SupplySymbiosis } from './supplySymbiosis'
-import { SupplyAave } from './supplyAave'
 
 export type ZapExactIn = Promise<{
     execute: (signer: Signer) => Execute
@@ -25,7 +24,7 @@ export type ZapExactIn = Promise<{
     transactionRequest: TransactionRequest
 }>
 
-export type Supply = SupplySymbiosis | SupplyAave
+export type Supply = SupplySymbiosis
 
 export class Zapping {
     protected from!: string

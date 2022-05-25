@@ -6,6 +6,8 @@ import { ChainId } from '../constants'
 import { Chain, chains, Token, TokenAmount } from '../entities'
 import { Bridging } from './bridging'
 import {
+    Aave,
+    Aave__factory,
     AvaxRouter,
     AvaxRouter__factory,
     Bridge,
@@ -14,6 +16,8 @@ import {
     Fabric__factory,
     MetaRouter,
     MetaRouter__factory,
+    MulticallRouter,
+    MulticallRouter__factory,
     NervePool,
     NervePool__factory,
     OneInchOracle,
@@ -32,7 +36,8 @@ import { RevertPending } from './revert'
 import { Swapping } from './swapping'
 import { ChainConfig, Config } from './types'
 import { ONE_INCH_ORACLE_MAP } from './constants'
-import { Zapping } from './zapping'
+import { ZapToSymbiosis } from './zapToSymbiosis'
+import { ZapToAave } from './zapToAave'
 
 export class Symbiosis {
     public providers: Map<ChainId, StaticJsonRpcProvider>
@@ -85,8 +90,12 @@ export class Symbiosis {
         return new RevertPending(this, request)
     }
 
-    public newZapping() {
-        return new Zapping(this)
+    public newZapToSymbiosis() {
+        return new ZapToSymbiosis(this)
+    }
+
+    public newZapToAave() {
+        return new ZapToAave(this)
     }
 
     public getPendingRequests(address: string): Promise<PendingRequest[]> {
@@ -166,10 +175,18 @@ export class Symbiosis {
         return NervePool__factory.connect(address, signerOrProvider)
     }
 
-    public aavePoolByAddress(address: string, chainId: ChainId, signer?: Signer): NervePool {
+    public aavePool(chainId: ChainId, signer?: Signer): Aave {
+        const address = this.chainConfig(chainId).aavePool
         const signerOrProvider = signer || this.getProvider(chainId)
 
-        return NervePool__factory.connect(address, signerOrProvider)
+        return Aave__factory.connect(address, signerOrProvider)
+    }
+
+    public multicallRouter(chainId: ChainId, signer?: Signer): MulticallRouter {
+        const address = this.chainConfig(chainId).multicallRouter
+        const signerOrProvider = signer || this.getProvider(chainId)
+
+        return MulticallRouter__factory.connect(address, signerOrProvider)
     }
 
     public metaRouter(chainId: ChainId, signer?: Signer): MetaRouter {
