@@ -1,7 +1,7 @@
 import { BigNumber } from 'ethers'
 import JSBI from 'jsbi'
 import { formatUnits } from '@ethersproject/units'
-import fetch from 'node-fetch-native'
+import fetch from 'node-fetch'
 
 import { Percent, Token, TokenAmount, wrappedToken } from '../entities'
 import { OneInchOracle } from './contracts'
@@ -82,7 +82,7 @@ export class OneInchTrade {
         const url = `${API_URL}/${this.tokenAmountIn.token.chainId}/swap?${params.join('&')}`
 
         const response = await fetch(url)
-        const json = await response.json()
+        const json = (await response.json()) as any
         if (response.status === 400) {
             throw new Error(`Cannot build 1inch trade: ${json['description']}`)
         }
@@ -110,7 +110,7 @@ export class OneInchTrade {
     static async getProtocols(chainId: ChainId): Promise<Protocol[]> {
         const url = `${API_URL}/${chainId}/liquidity-sources`
         const response = await fetch(url)
-        const json = await response.json()
+        const json = (await response.json()) as any
         if (response.status === 400) {
             throw new Error(`Cannot get 1inch protocols: ${json['description']}`)
         }

@@ -1,6 +1,6 @@
 import { StaticJsonRpcProvider } from '@ethersproject/providers'
 import { Signer, utils } from 'ethers'
-import fetch from 'node-fetch-native'
+import fetch from 'node-fetch'
 import JSBI from 'jsbi'
 import { ChainId } from '../constants'
 import { Chain, chains, Token, TokenAmount } from '../entities'
@@ -374,11 +374,11 @@ export class Symbiosis {
             },
             body: JSON.stringify(params),
         })
-            .then(async (response) => {
+            .then(async (response): Promise<any> => {
                 if (!response.ok) {
                     return Promise.reject(new Error(await response.text()))
                 }
-                return response.json()
+                return await response.json()
             })
             .then(({ price }) => JSBI.BigInt(price))
     }
