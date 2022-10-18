@@ -6,6 +6,7 @@ import { ChainId } from '../constants'
 import { Token, TokenAmount } from '../entities'
 import { SwapExactIn, BaseSwapping } from './baseSwapping'
 import { MulticallRouter, RenMintGatewayV3 } from './contracts'
+import { EthereumTestnet } from '@renproject/chains-ethereum/ethereum'
 
 export type ZappingRenBTCExactIn = Promise<
     Omit<Awaited<SwapExactIn>, 'execute'> & {
@@ -181,10 +182,10 @@ export class ZappingRenBTC extends BaseSwapping {
 
         if (this.renChainId === ChainId.ETH_KOVAN) {
             network = 'testnet'
-
             ethereum = new Ethereum({
                 network,
                 provider,
+                defaultTestnet: EthereumTestnet.Goerli,
             })
         } else if (this.renChainId === ChainId.BSC_MAINNET) {
             network = 'mainnet'
