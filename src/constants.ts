@@ -162,3 +162,64 @@ export const SOLIDITY_TYPE_MAXIMA = {
     [SolidityType.uint8]: JSBI.BigInt('0xff'),
     [SolidityType.uint256]: JSBI.BigInt('0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'),
 }
+
+// Hardcoded addresses for Mute.io on ZKSync.
+// TODO: Remove this once we have a better way to fetch ZKSync pool addresses.
+export const MUTE_POOLS: Record<
+    string,
+    {
+        address: string
+        stable: boolean
+    }
+> = {
+    // USDC/WETH
+    '0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4-0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91': {
+        address: '0xDFAaB828f5F515E104BaaBa4d8D554DA9096f0e4',
+        stable: false,
+    },
+    // MUTE/WETH
+    '0x0e97C7a0F8B2C9885C8ac9fC6136e829CbC21d42-0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91': {
+        address: '0xb85feb6aF3412d690DFDA280b73EaED73a2315bC',
+        stable: false,
+    },
+    // WETH/ZKDOGE
+    '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91-0xbFB4b5616044Eded03e5b1AD75141f0D9Cb1499b': {
+        address: '0x042Ded90C26EEA4D860F8E3Bd363Cc4B17CAA00C',
+        stable: false,
+    },
+    // WETH/DOF
+    '0xCFfeC2c683762831D16a9C5b9c70ba1789bbA1f3-0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91': {
+        address: '0x4e7e8a9f5b0b1f7f2f8b4c1b3e3e2f5b9e7baf53',
+        stable: false,
+    },
+    // WETH/WISP
+    '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91-0xc8Ec5B0627C794de0e4ea5d97AD9A556B361d243': {
+        address: '0xBe21BCD3a21dC4Dd6C58945f0F5DE4132644020a',
+        stable: false,
+    },
+    // WETH/$ZFLOKI
+    '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91-0x8d266fA745b7Cf3856AF0c778828473B8d33a149': {
+        address: '0xFa327A93D82407eaC248858E36F8DBF3008E62C7',
+        stable: false,
+    },
+    // $ZKINU/WETH
+    '0x45559297BdEDf453e172833AC7086f7D03f6690B-0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91': {
+        address: '0x90CFBAF341d7296ABaD4475Dae2182a3b14bb44e',
+        stable: false,
+    },
+    // WETH/zkLotto
+    '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91-0x94466dCFe241db963AF1bc9741a94DAA87AB2169': {
+        address: '0x5a97D7A43DC9325F189eB7f93D15458fde826458',
+        stable: false,
+    },
+    // zkGS/WETH
+    '0x0F363665b625fA5e27B4cFf383b9A635dA5043e0-0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91': {
+        address: '0x87eeCc8dE7007A67D6660D1baE76cfded0741195',
+        stable: false,
+    },
+    // WETH/ZKPAD
+    '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91-0x959aB3394246669914BdDEAeB50f8Ac85648615e': {
+        address: '0xA60e25B317EEb5E7e12aF002500304a3f9D0bcA5',
+        stable: false,
+    },
+}
