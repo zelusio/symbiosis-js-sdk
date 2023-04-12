@@ -8,7 +8,7 @@ import { AdaRouter, AvaxRouter, KavaRouter, MuteRouter__factory, Pair__factory, 
 import { getMulticall } from '../multicall'
 import { PairState } from '../types'
 import { computeSlippageAdjustedAmounts, computeTradePriceBreakdown } from '../utils'
-import { ChainId, MUTE_POOLS } from '../../constants'
+import { ChainId } from '../../constants'
 import { DataProvider } from '../dataProvider'
 import { SymbiosisTrade } from './symbiosisTrade'
 
@@ -117,12 +117,7 @@ export class UniLikeTrade implements SymbiosisTrade {
             const path = (Array.isArray(args[1]) ? args[1] : args[2]) as string[]
 
             // check if pair is stable using 'stable' view method
-            const muteArgs: any = [
-                ...args,
-                path.map((pairAddress) => {
-                    return Object.values(MUTE_POOLS).find((pool) => pool.address === pairAddress)?.stable
-                }),
-            ]
+            const muteArgs: any = [...args, path.map(() => false)]
 
             return {
                 data: muteRouterInterface.encodeFunctionData(method as any, muteArgs),

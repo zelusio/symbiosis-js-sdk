@@ -37,7 +37,9 @@ export class Pair {
         let params: (string | boolean)[] = [tokens[0].address, tokens[1].address]
 
         if (chainId === ChainId.ZKSYNC_MAINNET) {
-            const pool = MUTE_POOLS[`${tokens[0].address}-${tokens[1].address}`]
+            const pool = MUTE_POOLS.find(
+                (pool) => pool.tokenA === tokens[0].address && pool.tokenB === tokens[1].address
+            )
             return pool?.address ?? '0x0000000000000000000000000000000000000000'
         }
 

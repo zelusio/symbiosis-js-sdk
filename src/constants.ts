@@ -165,61 +165,64 @@ export const SOLIDITY_TYPE_MAXIMA = {
 
 // Hardcoded addresses for Mute.io on ZKSync.
 // TODO: Remove this once we have a better way to fetch ZKSync pool addresses.
-export const MUTE_POOLS: Record<
-    string,
+export const MUTE_POOLS: {
+    tokenA: string
+    tokenB: string
+    address: string
+    name: string
+}[] = [
     {
-        address: string
-        stable: boolean
-    }
-> = {
-    // USDC/WETH
-    '0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4-0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91': {
+        tokenA: '0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4',
+        tokenB: '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91',
         address: '0xDFAaB828f5F515E104BaaBa4d8D554DA9096f0e4',
-        stable: false,
+        name: 'USDC-WETH',
     },
-    // MUTE/WETH
-    '0x0e97C7a0F8B2C9885C8ac9fC6136e829CbC21d42-0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91': {
+    {
+        tokenA: '0x0e97C7a0F8B2C9885C8ac9fC6136e829CbC21d42',
+        tokenB: '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91',
         address: '0xb85feb6aF3412d690DFDA280b73EaED73a2315bC',
-        stable: false,
+        name: 'Mute-WETH',
     },
-    // WETH/ZKDOGE
-    '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91-0xbFB4b5616044Eded03e5b1AD75141f0D9Cb1499b': {
-        address: '0x042Ded90C26EEA4D860F8E3Bd363Cc4B17CAA00C',
-        stable: false,
-    },
-    // WETH/DOF
-    '0xCFfeC2c683762831D16a9C5b9c70ba1789bbA1f3-0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91': {
-        address: '0x4e7e8a9f5b0b1f7f2f8b4c1b3e3e2f5b9e7baf53',
-        stable: false,
-    },
-    // WETH/WISP
-    '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91-0xc8Ec5B0627C794de0e4ea5d97AD9A556B361d243': {
+    {
+        tokenA: '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91',
+        tokenB: '0xc8Ec5B0627C794de0e4ea5d97AD9A556B361d243',
         address: '0xBe21BCD3a21dC4Dd6C58945f0F5DE4132644020a',
-        stable: false,
+        name: 'WETH-Whisper',
     },
-    // WETH/$ZFLOKI
-    '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91-0x8d266fA745b7Cf3856AF0c778828473B8d33a149': {
-        address: '0xFa327A93D82407eaC248858E36F8DBF3008E62C7',
-        stable: false,
+    {
+        tokenA: '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91',
+        tokenB: '0xbFB4b5616044Eded03e5b1AD75141f0D9Cb1499b',
+        address: '0x042Ded90C26EEA4D860F8E3Bd363Cc4B17CAA00C',
+        name: 'WETH-zkDoge',
     },
-    // $ZKINU/WETH
-    '0x45559297BdEDf453e172833AC7086f7D03f6690B-0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91': {
+    {
+        tokenA: '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91',
+        tokenB: '0x8aAAF6E6167825829Ab29F260f246AFE742FB243',
+        address: '0xF7a13fc63b18341843B8197F074528943098c1A6',
+        name: 'WETH-ZKCULT',
+    },
+    {
+        tokenA: '0x45559297BdEDf453e172833AC7086f7D03f6690B',
+        tokenB: '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91',
         address: '0x90CFBAF341d7296ABaD4475Dae2182a3b14bb44e',
-        stable: false,
+        name: 'ZK INU-WETH',
     },
-    // WETH/zkLotto
-    '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91-0x94466dCFe241db963AF1bc9741a94DAA87AB2169': {
-        address: '0x5a97D7A43DC9325F189eB7f93D15458fde826458',
-        stable: false,
+    {
+        tokenA: '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91',
+        tokenB: '0xA51Bc2433a33c448DD40F7074bCAB751A1922706',
+        address: '0xd0c991F54c54022aD5f98B1468668Da7Dc33B8Ef',
+        name: 'WETH-ZKInu',
     },
-    // zkGS/WETH
-    '0x0F363665b625fA5e27B4cFf383b9A635dA5043e0-0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91': {
-        address: '0x87eeCc8dE7007A67D6660D1baE76cfded0741195',
-        stable: false,
+    {
+        tokenA: '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91',
+        tokenB: '0x7C9becB53A7702244Ca260Fd01B4748756CE7BB3',
+        address: '0xf9a7ff47A346E242590f87546d1995DE91B8b8B1',
+        name: 'WETH-ZKRISE',
     },
-    // WETH/ZKPAD
-    '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91-0x959aB3394246669914BdDEAeB50f8Ac85648615e': {
-        address: '0xA60e25B317EEb5E7e12aF002500304a3f9D0bcA5',
-        stable: false,
+    {
+        tokenA: '0x0231B3DE40B6B3BDd28dcEf037F1b7a3fCf5A95a',
+        tokenB: '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91',
+        address: '0x3d04A8054C1A846370778BA2A4805d1Fe4F30405',
+        name: 'Zynergy-WETH',
     },
-}
+]
