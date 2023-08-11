@@ -6,9 +6,6 @@ import TronWeb, { TransactionInfo } from 'tronweb'
 import { ChainId } from '../constants'
 import { Chain, chains, Token, TokenAmount, wrappedToken } from '../entities'
 import { Bridging } from './bridging'
-import { config as mainnet } from './config/mainnet'
-import { config as testnet } from './config/testnet'
-import { ONE_INCH_ORACLE_MAP } from './constants'
 import {
     Aave,
     Aave__factory,
@@ -62,11 +59,11 @@ import { ZappingCream } from './zappingCream'
 import { config as mainnet } from './config/mainnet'
 import { config as testnet } from './config/testnet'
 import { config as dev } from './config/dev'
-import { ZappingBeefy } from './zappingBeefy'
 import { BestPoolSwapping } from './bestPoolSwapping'
 import { ConfigCache } from './config/cache/cache'
 import { OmniPoolInfo } from './config/cache/builder'
 import { PendingRequest } from './revertRequest'
+import { getTransactionInfoById, isTronChainId } from './tron'
 
 export type ConfigName = 'dev' | 'testnet' | 'mainnet'
 

@@ -48,13 +48,6 @@ export interface BridgeExactInParams {
     revertableAddress: string
 }
 
-export type BridgeExactInParams = {
-    tokenAmountIn: TokenAmount
-    tokenOut: Token
-    to: string
-    revertableAddress: string
-}
-
 export class Bridging {
     public tokenAmountIn: TokenAmount | undefined
     public tokenOut: Token | undefined
@@ -277,7 +270,7 @@ export class Bridging {
 
         const token = wrappedToken(this.tokenAmountIn.token)
 
-        const calldata = synthesis.interface.encodeFunctionData('mintSyntheticToken', [
+        const calldata = synthesisInterface.encodeFunctionData('mintSyntheticToken', [
             '1', // _stableBridgingFee,
             externalId, // externalID,
             token.address, // _token,

@@ -54,7 +54,6 @@ interface SwapInfo {
 
 export type EthSwapExactIn = SwapInfo & {
     type: 'evm'
-    execute: (signer: Signer) => Execute
     transactionRequest: TransactionRequest
 }
 
@@ -194,7 +193,6 @@ export abstract class BaseSwapping {
         return {
             ...swapInfo,
             type: 'evm',
-            execute: (signer: Signer) => this.execute(transactionRequest, signer),
             transactionRequest,
         }
     }
@@ -734,7 +732,7 @@ export abstract class BaseSwapping {
             externalId, // _externalID,
             tronAddressToEvm(this.to), // _to
             this.transit.amountOut.raw.toString(), // _amount
-            tronAddressToEvm(this.transitStableOut.address), // _rToken
+            tronAddressToEvm(this.transitTokenOut.address), // _rToken
             tronAddressToEvm(this.finalReceiveSide()), // _finalReceiveSide
             this.finalCalldata(), // _finalCalldata
             this.finalOffset(), // _finalOffset
@@ -819,7 +817,7 @@ export abstract class BaseSwapping {
             {
                 stableBridgingFee: feeV2 ? feeV2?.raw.toString() : '0', // uint256 stableBridgingFee;
                 amount: this.transit.amountOut.raw.toString(), // uint256 amount;
-                syntCaller: tronAddressToEvm(this.symbiosis.metaRouter(this.symbiosis.omniPoolConfig.chainId).address), // address syntCaller;
+                syntCaller: tronAddressToEvm(this.symbiosis.metaRouter(this.omniPoolConfig.chainId).address), // address syntCaller;
                 finalReceiveSide: tronAddressToEvm(this.finalReceiveSide()), // address finalReceiveSide;
                 sToken: tronAddressToEvm(this.transit.amountOut.token.address), // address sToken;
                 finalCallData: this.finalCalldata(), // bytes finalCallData;
