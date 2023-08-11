@@ -18,7 +18,6 @@ export class Token {
     public readonly icons?: Icons
     public readonly chainFromId?: ChainId
     public readonly isNative: boolean
-    public readonly isStable?: boolean
     public readonly userToken?: boolean
 
     /**
@@ -35,7 +34,6 @@ export class Token {
         this.isNative = !!params.isNative
         this.icons = params.icons
         this.chainFromId = params.chainFromId
-        this.isStable = params.isStable
         this.userToken = params.userToken
 
         if (isTronChainId(params.chainId)) {
@@ -517,6 +515,54 @@ export const WETH = {
     [ChainId.LINEA_TESTNET]: new Token({
         chainId: ChainId.LINEA_TESTNET,
         address: '0x2C1b868d6596a18e32E61B901E4060C872647b6C',
+        decimals: 18,
+        symbol: 'WETH',
+        isNative: false,
+        name: 'Wrapped ETH',
+        icons: {
+            small: 'https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png',
+            large: 'https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png',
+        },
+    }),
+    [ChainId.LINEA_MAINNET]: new Token({
+        chainId: ChainId.LINEA_MAINNET,
+        address: '0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f',
+        decimals: 18,
+        symbol: 'WETH',
+        isNative: false,
+        name: 'Wrapped ETH',
+        icons: {
+            small: 'https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png',
+            large: 'https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png',
+        },
+    }),
+    [ChainId.MANTLE_MAINNET]: new Token({
+        chainId: ChainId.MANTLE_MAINNET,
+        address: '0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8',
+        decimals: 18,
+        symbol: 'WMNT',
+        isNative: false,
+        name: 'Wrapped MNT',
+        icons: {
+            small: 'https://s2.coinmarketcap.com/static/img/coins/64x64/27075.png',
+            large: 'https://s2.coinmarketcap.com/static/img/coins/64x64/27075.png',
+        },
+    }),
+    [ChainId.MANTLE_TESTNET]: new Token({
+        chainId: ChainId.MANTLE_TESTNET,
+        address: '0x8734110e5e1dcF439c7F549db740E546fea82d66',
+        decimals: 18,
+        symbol: 'WBIT',
+        isNative: false,
+        name: 'Wrapped BIT',
+        icons: {
+            small: 'https://s2.coinmarketcap.com/static/img/coins/64x64/27075.png',
+            large: 'https://s2.coinmarketcap.com/static/img/coins/64x64/27075.png',
+        },
+    }),
+    [ChainId.BASE_MAINNET]: new Token({
+        chainId: ChainId.BASE_MAINNET,
+        address: '0x4200000000000000000000000000000000000006',
         decimals: 18,
         symbol: 'WETH',
         isNative: false,
