@@ -1,6 +1,6 @@
 import { AddressZero, MaxUint256 } from '@ethersproject/constants'
 import { Log, TransactionReceipt, TransactionRequest } from '@ethersproject/providers'
-import { BigNumber } from 'ethers'
+import { BigNumber, utils } from 'ethers'
 import JSBI from 'jsbi'
 import { ChainId } from '../constants'
 import { Percent, Token, TokenAmount, wrappedToken } from '../entities'
@@ -166,8 +166,21 @@ export abstract class BaseSwapping {
         }
         // <<< NOTE create trades with calculated fee
 
+        const transactionRequest = this.getTransactionRequest(fee, feeV2)
+
+        let crossChainFee = fee
+        if (feeV2) {
+            const pow = BigNumber.from(10).pow(fee.token.decimals)
+            const powV2 = BigNumber.from(10).pow(feeV2.token.decimals)
+
+            const feeBase = BigNumber.from(fee.raw.toString()).mul(powV2)
+            const feeV2Base = BigNumber.from(feeV2.raw.toString()).mul(pow)
+
+            crossChainFee = new TokenAmount(feeV2.token, feeBase.add(feeV2Base).div(pow).toString())
+        }
+
         const swapInfo: SwapInfo = {
-            fee: feeV2 || fee,
+            fee: crossChainFee,
             tokenAmountOut: this.tokenAmountOut(feeV2),
             tokenAmountOutWithZeroFee, // uses for calculation pure swap price except fee
             route: this.route,
@@ -265,6 +278,35 @@ export abstract class BaseSwapping {
             chainIdIn: this.tokenAmountIn.token.chainId,
         }).waitForComplete(receipt)
     }
+
+    public async findTransitTokenSent(transactionHash: string): Promise<TokenAmount | undefined> {
+        const chainId = this.tokenOut.chainId
+        const metarouter = this.symbiosis.metaRouter(chainId)
+        const providerTo = this.symbiosis.getProvider(chainId)
+        const receipt = await providerTo.getTransactionReceipt(transactionHash)
+
+        const eventId = utils.id('TransitTokenSent(address,uint256,address)')
+
+        const log = receipt.logs.find((i: Log) => {
+            return i.topics[0] === eventId
+        })
+        if (!log) {
+            return undefined
+        }
+
+        const parsedLog = metarouter.interface.parseLog(log)
+
+        const token = this.symbiosis.tokens().find((i: Token) => {
+            return i.chainId === chainId && i.address.toLowerCase() === parsedLog.args.token.toLowerCase()
+        })
+
+        if (!token) {
+            return undefined
+        }
+
+        return new TokenAmount(token, parsedLog.args.amount.toString())
+    }
+
 
     protected getEvmTransactionRequest(fee: TokenAmount, feeV2: TokenAmount | undefined): TransactionRequest {
         const chainId = this.tokenAmountIn.token.chainId

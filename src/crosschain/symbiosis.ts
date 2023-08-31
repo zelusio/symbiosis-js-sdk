@@ -50,7 +50,7 @@ import { Error, ErrorCode } from './error'
 import { RevertPending } from './revert'
 import { statelessWaitForComplete } from './statelessWaitForComplete'
 import { Swapping } from './swapping'
-import { ChainConfig, Config, OmniPoolConfig } from './types'
+import { ChainConfig, Config, OmniPoolConfig, OverrideConfig } from './types'
 import { ONE_INCH_ORACLE_MAP } from './constants'
 import { Zapping } from './zapping'
 import { ZappingAave } from './zappingAave'
@@ -75,7 +75,7 @@ export class Symbiosis {
 
     private readonly configCache: ConfigCache
 
-    public constructor(config: ConfigName, clientId: string) {
+    public constructor(config: ConfigName, clientId: string, overrideConfig?: OverrideConfig) {
         if (config === 'mainnet') {
             this.config = mainnet
         } else if (config === 'testnet') {
@@ -84,6 +84,16 @@ export class Symbiosis {
             this.config = dev
         } else {
             throw new Error('Unknown config name')
+        }
+
+        if (overrideConfig) {
+            this.config.chains = this.config.chains.map((chainConfig) => {
+                const found = overrideConfig.chains.find((i) => i.id === chainConfig.id)
+                if (found) {
+                    chainConfig.rpc = found.rpc
+                }
+                return chainConfig
+            })
         }
 
         this.configCache = new ConfigCache(config)
@@ -398,7 +408,10 @@ export class Symbiosis {
         })
 
         if (!transitToken) {
-            throw new Error(`Cannot find transitToken for chain ${chainId}. Pool: ${omniPool.id}`)
+            throw new Error(
+                `Cannot find transitToken for chain ${chainId}. Pool: ${omniPool.id}`,
+                ErrorCode.NO_TRANSIT_TOKEN
+            )
         }
         return transitToken
     }
@@ -412,17 +425,7 @@ export class Symbiosis {
     }
 
     public getOmniPoolTokens(omniPoolConfig: OmniPoolConfig): Token[] {
-        const pool = this.configCache.getOmniPoolByConfig(omniPoolConfig)
-        if (!pool) {
-            throw new Error('Cannot find omniPool')
-        }
-        return pool.tokens.map((i) => {
-            const token = this.configCache.getToken(i.tokenId)
-            if (!token) {
-                throw new Error(`Cannot find token by id ${i.tokenId}`)
-            }
-            return new Token(token)
-        })
+        return this.configCache.getOmniPoolTokens(omniPoolConfig)
     }
 
     public tronWeb(chainId: ChainId): TronWeb {

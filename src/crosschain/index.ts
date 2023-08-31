@@ -11,7 +11,7 @@ export * from './revertRequest'
 export * from './getRepresentation'
 export * from './omniLiquidity'
 export * from './dataProvider'
-export { SymbiosisTradeType, getTradePriceImpact } from './trade'
+export { SymbiosisTradeType, getTradePriceImpact, IzumiTrade } from './trade'
 export * from './zappingSyncSwapLaunchPool'
 // export * from './contracts'
 export {
@@ -23,3 +23,4 @@ export {
     type TronTransactionData,
 } from './tron'
 export { TRON_PORTAL_ABI, TRON_TRC20_ABI } from './tronAbis'
+export * from './bestPoolSwapping'

@@ -22,6 +22,8 @@ import { config as dev } from '../dev'
 import type { ConfigName } from '../../symbiosis'
 import { BigNumberish } from 'ethers'
 import { BigNumber } from '@ethersproject/bignumber'
+import { Contract } from '@ethersproject/contracts'
+import ERC20 from '../../../abis/ERC20.json'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const fs = require('fs')
@@ -30,7 +32,7 @@ export type Id = number
 
 export type TokenInfo = TokenConstructor & {
     id: Id
-    pair?: Id
+    originalId?: Id
 }
 
 export type OmniPoolToken = {
@@ -221,13 +223,13 @@ export class Builder {
 
             const multicall = await getMulticall(fabric.provider)
 
-            const synthTokens = realTokensWithId.map((token) => ({
+            const synthCalls = realTokensWithId.map((token) => ({
                 target: fabric.address,
                 callData: fabric.interface.encodeFunctionData('getSyntRepresentation', [token.address, token.chainId]),
             }))
 
-            const representationsResults = await multicall.callStatic.tryAggregate(false, synthTokens)
-            representationsResults.forEach(([success, returnData], index) => {
+            const synthResults = await multicall.callStatic.tryAggregate(false, synthCalls)
+            const synths = synthResults.map(([success, returnData]) => {
                 if (!success) {
                     throw new Error(`Cannot get representations from fabric on chain ${chainWithFabric.id}`)
                 }
@@ -237,20 +239,29 @@ export class Builder {
                 if (synthAddress === AddressZero) {
                     return
                 }
+                return synthAddress
+            })
+
+            for (let j = 0; j < synths.length; j++) {
+                const address = synths[j]
+                if (!address) {
+                    continue
+                }
+                const erc20 = new Contract(address, ERC20, fabric.provider)
 
                 const token: TokenInfo = {
-                    ...realTokensWithId[index],
+                    ...realTokensWithId[j],
                     id: idCounter++,
-                    symbol: `s${realTokensWithId[index].symbol}`,
-                    address: synthAddress,
+                    symbol: await erc20.symbol(),
+                    name: await erc20.name(),
+                    address: address,
                     chainId: chainWithFabric.id,
-                    chainFromId: realTokensWithId[index].chainId,
-                    pair: realTokensWithId[index].id,
+                    chainFromId: realTokensWithId[j].chainId,
+                    originalId: realTokensWithId[j].id,
                 }
-                realTokensWithId[index].pair = token.id
 
                 tokens.push(token)
-            })
+            }
         }
 
         return tokens

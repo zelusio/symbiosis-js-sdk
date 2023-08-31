@@ -19,6 +19,7 @@ export class Token {
     public readonly chainFromId?: ChainId
     public readonly isNative: boolean
     public readonly userToken?: boolean
+    public readonly deprecated: boolean
 
     /**
      * Constructs an instance of the base class `Token`.
@@ -35,6 +36,7 @@ export class Token {
         this.icons = params.icons
         this.chainFromId = params.chainFromId
         this.userToken = params.userToken
+        this.deprecated = !!params.deprecated
 
         if (isTronChainId(params.chainId)) {
             this.address = tronAddressToEvm(params.address)
@@ -419,6 +421,18 @@ export const WETH = {
     [ChainId.SCROLL_TESTNET]: new Token({
         chainId: ChainId.SCROLL_TESTNET,
         address: '0xa1EA0B2354F5A344110af2b6AD68e75545009a03',
+        decimals: 18,
+        symbol: 'WETH',
+        isNative: false,
+        name: 'Wrapped ETH',
+        icons: {
+            small: 'https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png',
+            large: 'https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png',
+        },
+    }),
+    [ChainId.SCROLL_SEPOLIA]: new Token({
+        chainId: ChainId.SCROLL_SEPOLIA,
+        address: '0x5300000000000000000000000000000000000004',
         decimals: 18,
         symbol: 'WETH',
         isNative: false,

@@ -23,8 +23,8 @@
                 "large": "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
                 "small": "https://s2.coinmarketcap.com/static/img/coins/128x128/1027.png"
             },
-            "id": 0,
-            "pair": 2
+            "deprecated": false,
+            "id": 0
         },
         {
             "decimals": 18,
@@ -37,13 +37,13 @@
                 "large": "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
                 "small": "https://s2.coinmarketcap.com/static/img/coins/128x128/1027.png"
             },
-            "id": 1,
-            "pair": 3
+            "deprecated": false,
+            "id": 1
         },
         {
             "decimals": 18,
             "symbol": "sWETH",
-            "name": "Wrapped ETH",
+            "name": "Wrapped Ether from Goerli",
             "chainId": 97,
             "address": "0xb1c5691B3Cb5e1B673Ef9Aa2599740a1cC76F928",
             "isNative": false,
@@ -52,13 +52,14 @@
                 "small": "https://s2.coinmarketcap.com/static/img/coins/128x128/1027.png"
             },
             "chainFromId": 5,
+            "deprecated": false,
             "id": 2,
-            "pair": 0
+            "originalId": 0
         },
         {
             "decimals": 18,
             "symbol": "sWETH",
-            "name": "Wrapped ETH",
+            "name": "Wrapped Ether from Scroll Testnet",
             "chainId": 97,
             "address": "0x3624b5e063405e7724cBbC24f504eA3da3e08b81",
             "isNative": false,
@@ -67,8 +68,9 @@
                 "small": "https://s2.coinmarketcap.com/static/img/coins/128x128/1027.png"
             },
             "chainFromId": 534353,
+            "deprecated": false,
             "id": 3,
-            "pair": 1
+            "originalId": 1
         }
     ],
     "thresholds": [
