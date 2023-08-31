@@ -166,8 +166,6 @@ export abstract class BaseSwapping {
         }
         // <<< NOTE create trades with calculated fee
 
-        const transactionRequest = this.getTransactionRequest(fee, feeV2)
-
         let crossChainFee = fee
         if (feeV2) {
             const pow = BigNumber.from(10).pow(fee.token.decimals)
@@ -306,7 +304,6 @@ export abstract class BaseSwapping {
 
         return new TokenAmount(token, parsedLog.args.amount.toString())
     }
-
 
     protected getEvmTransactionRequest(fee: TokenAmount, feeV2: TokenAmount | undefined): TransactionRequest {
         const chainId = this.tokenAmountIn.token.chainId
