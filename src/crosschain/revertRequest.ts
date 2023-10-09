@@ -69,6 +69,10 @@ export const findSourceChainData = async (
     const chains = symbiosis.chains()
     for (let i = 0; i < chains.length; i++) {
         const chainId = chains[i].id
+
+        if (chainId === ChainId.ZETACHAIN_ATHENS_2) {
+            continue
+        }
         if (chainId === chainIdFrom || chainId === chainIdTo) {
             continue
         }
@@ -153,6 +157,7 @@ export class RevertRequest {
         await provider.ready
 
         const receipt = await provider.getTransactionReceipt(this.transactionHash)
+        console.log('receipt', receipt)
         if (!receipt) {
             throw new Error(
                 `Tx ${this.transactionHash} does not exist on chain ${this.chainId}. Provider ${provider.connection.url}`
@@ -174,6 +179,8 @@ export class RevertRequest {
         const chainIdTo = chainID.toNumber()
         let chainIdFrom = this.chainId
         let from = fromOrigin
+
+        console.log(chainIdFrom, chainIdTo, from)
 
         const token = this.symbiosis.findToken(tokenAddress, this.chainId)
         if (!token) {
@@ -201,6 +208,7 @@ export class RevertRequest {
             const metaRouterAddress = this.symbiosis.metaRouter(omniPoolConfig.chainId).address
             if (from.toLowerCase() === metaRouterAddress.toLowerCase()) {
                 type = 'burn-v2'
+
                 const data = await findSourceChainData(
                     this.symbiosis,
                     this.chainId,
@@ -210,6 +218,7 @@ export class RevertRequest {
                     omniPoolConfig,
                     synthesizeRequestFinder
                 )
+                console.log('ya ypal...')
                 if (data) {
                     const { sourceChainId, fromAddress } = data
                     from = fromAddress
