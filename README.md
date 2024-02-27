@@ -2,6 +2,18 @@
 
 [![Build Status](https://drone.symbiosis.finance/api/badges/symbiosis-finance/sdk/status.svg)](https://drone.symbiosis.finance/symbiosis-finance/sdk)
 
+# Zelusio README
+
+Use version `2.9.52-1`.
+
+```
+npm install
+npm run build
+npm publish
+```
+
+# Original README
+
 ## Docs
 
 You can find js-sdk docs here - https://docs.symbiosis.finance/developer-tools/symbiosis-js-sdk

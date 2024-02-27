@@ -1,6 +1,6 @@
 {
-    "name": "symbiosis-js-sdk",
-    "version": "2.9.52",
+    "name": "@zelusio/symbiosis-js-sdk",
+    "version": "2.9.52-1",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
     "files": [
@@ -9,10 +9,10 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/symbiosis-finance/js-sdk.git"
+        "url": "git+https://github.com/zelusio/symbiosis-js-sdk.git"
     },
     "bugs": {
-        "url": "https://github.com/symbiosis-finance/js-sdk/issues"
+        "url": "https://github.com/zelusio/symbiosis-js-sdk/issues"
     },
     "module": "dist/symbiosis-js-sdk.esm.js",
     "scripts": {
@@ -49,21 +49,9 @@
         "toformat": "^2.0.0"
     },
     "peerDependencies": {
-        "@ethersproject/address": "^5.2.0",
-        "@ethersproject/bignumber": "^5.2.0",
-        "@ethersproject/contracts": "^5.2.0",
-        "@ethersproject/networks": "^5.2.0",
-        "@ethersproject/providers": "^5.2.0",
-        "@ethersproject/solidity": "^5.2.0",
-        "@ethersproject/units": "^5.2.0"
+        "ethers": "^5.2.0"
     },
     "devDependencies": {
-        "@ethersproject/address": "^5.0.2",
-        "@ethersproject/contracts": "^5.0.2",
-        "@ethersproject/networks": "^5.0.2",
-        "@ethersproject/providers": "^5.0.5",
-        "@ethersproject/solidity": "^5.0.2",
-        "@ethersproject/units": "^5.2.0",
         "@typechain/ethers-v5": "^9.0.0",
         "@types/big.js": "^4.0.5",
         "@types/jest": "^27.0.3",
